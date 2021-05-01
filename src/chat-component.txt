@@ -1,0 +1,72 @@
+import axios from "axios";
+import React from "react";
+
+import './chatcomponent.css'
+
+export default class ChatComponent extends React.Component {
+constructor(props) {
+    super(props);
+
+    this.state = {
+        currentQuestion: '',
+        history: []
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+
+    console.log("ChatComponent constructor")
+}
+
+componentDidMount() {
+    console.log("ChatComponent componentDidMount")
+
+    // axios.get("http://localhost:4000/q/10"
+    // )
+    //     .then(function(response) {
+    //         console.log(response.data)
+    //     })
+}
+
+    render() {
+        console.log("ChatComponent render")
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <div>
+                    {
+                        this.state.history.map(historyItem =>{
+                            return this.getHistoryItemElement(historyItem)
+                        })
+                    } 
+                </div>
+                <input type="text" placeholder="Ask a question" value={this.state.currentQuestion} onChange={this.handleChange}></input>
+                <input type="submit"></input>
+            </form>
+        );
+    }
+
+    getHistoryItemElement(historyItem) {
+        return (
+            <div className="divhistoryItem">
+                <div className="divQuestion" >{historyItem.question}</div>
+                <div className="divAnswer">{historyItem.answer}</div>
+            </div>
+        )
+    }
+
+    handleChange(event) {
+        this.setState({ 
+            currentQuestion: event.target.value
+        })
+    }
+
+    handleSubmit(event) {
+        this.setState({
+            currentQuestion: '',
+            history: [...this.state.history, { question: this.state.currentQuestion, answer: 'waiting...'  }]
+        })
+        
+        event.preventDefault();
+    }
+    
+}

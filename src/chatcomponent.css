@@ -1,0 +1,11 @@
+.divhistoryItem {
+ width: 500px;   
+}
+
+.divQuestion {
+    text-align: right;
+}
+
+.divAnswer {
+    text-align: left;
+}
