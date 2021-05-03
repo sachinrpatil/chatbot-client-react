@@ -9,3 +9,29 @@
 .divAnswer {
     text-align: left;
 }
+
+.chatForm {
+    position: relative;
+    height: 500px;
+    width: 700px;
+    border: solid red;
+}
+
+.historySection {
+    display: flex;
+    flex-direction: column-reverse;
+    border: solid blue;
+    height: 450px;
+    overflow: auto;
+}
+
+.questionInputSection {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+
+.questionInput {
+    width: 600px;
+}

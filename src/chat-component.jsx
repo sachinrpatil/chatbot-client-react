@@ -20,27 +20,23 @@ constructor(props) {
 
 componentDidMount() {
     console.log("ChatComponent componentDidMount")
-
-    // axios.get("http://localhost:4000/q/10"
-    // )
-    //     .then(function(response) {
-    //         console.log(response.data)
-    //     })
 }
 
     render() {
         console.log("ChatComponent render")
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div>
+            <form onSubmit={this.handleSubmit} className="chatForm">
+                <div className="historySection">
                     {
-                        this.state.history.map(historyItem =>{
+                        this.state.history.reverse().map(historyItem =>{
                             return this.getHistoryItemElement(historyItem)
                         })
                     } 
                 </div>
-                <input type="text" placeholder="Ask a question" value={this.state.currentQuestion} onChange={this.handleChange}></input>
-                <input type="submit"></input>
+                <div className="questionInputSection">
+                    <input className="questionInput" type="text" placeholder="Ask a question" value={this.state.currentQuestion} onChange={this.handleChange}></input>
+                    <input type="submit"></input>
+                </div>
             </form>
         );
     }
@@ -61,9 +57,15 @@ componentDidMount() {
     }
 
     handleSubmit(event) {
-        this.setState({
-            currentQuestion: '',
-            history: [...this.state.history, { question: this.state.currentQuestion, answer: 'waiting...'  }]
+        
+        axios.get("http://localhost:4000/askq/" + this.state.currentQuestion
+            )
+        .then((response) => {
+            console.log(response.data)
+            this.setState({
+                currentQuestion: '',
+                history: [...this.state.history, { question: this.state.currentQuestion, answer: response.data }]
+            })
         })
         
         event.preventDefault();
